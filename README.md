@@ -1,5 +1,5 @@
-# Script-For-Linux
-# Script pós formatação do linux que instala alguns programas devs.
+# Script For Linux
+# Linux post format script that installs some devs programs..
 ```
 
 $ git clone https://github.com/Marcel0Sousa/Script-For-Linux.git   
