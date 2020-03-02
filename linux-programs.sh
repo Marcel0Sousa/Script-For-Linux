@@ -7,6 +7,25 @@ Sound Input & Output Device Chooser
 https://blog.rocketseat.com.br/terminal-com-oh-my-zsh-spaceship-dracula-e-mais/
 *
 sudo apt install update && apt upgrade -y
+clear
+
+k='\033[01;32m'
+echo
+echo "${k}████████╗ ██████╗██╗  ██╗███████╗██╗      ██████╗ ";
+echo "${k}╚══██╔══╝██╔════╝██║  ██║██╔════╝██║     ██╔═══██╗";
+echo "${k}   ██║   ██║     ███████║█████╗  ██║     ██║   ██║";
+echo "${k}   ██║   ██║     ██╔══██║██╔══╝  ██║     ██║   ██║";
+echo "${k}   ██║   ╚██████╗██║  ██║███████╗███████╗╚██████╔╝";
+echo "${k}   ╚═╝    ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ";
+echo "${k} /_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/";
+# -------------------------------------------------------------#
+echo
+printf "Linux post format script that installs some devs programs.\n"
+printf "Press Y to continue the installation or N to canceled: "
+read opcao
+case $opcao in
+
+y)
 
 sudo apt-get install -y wget curl git zsh dconf-cli gnome-session qbittorrent net-tools vlc flatpak qemu qemu-kvm bridge-utils virt-manager
 
@@ -57,6 +76,7 @@ wget $DISCORD -O discord.deb
 sudo dpkg -i discord.deb
 rm discord.deb
 
+:<<'F'
 #Download Firefox
 cd /opt/
 FIREFOX=https://download-installer.cdn.mozilla.net/pub/firefox/releases/72.0.2/linux-x86_64/pt-BR/firefox-72.0.2.tar.bz2
@@ -64,6 +84,7 @@ sudo wget $FIREFOX -O firefox.bz2
 sudo tar -xf firefox.bz2
 sudo rm firefox.bz2
 cd
+F
 
 sudo apt autoremove firefox
 
@@ -116,4 +137,11 @@ tar -xf xdm.tar.xz
 chmod +x install.sh
 sudo ./install.sh
 rm xdm.tar.xz install.sh readme.txt
+;;
+
+n)
+echo
+printf "installation canceled :( \n"
+;;
+esac
 
