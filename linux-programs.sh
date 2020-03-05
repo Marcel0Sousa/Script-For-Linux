@@ -6,8 +6,9 @@ Dash to Panel
 Sound Input & Output Device Chooser
 https://blog.rocketseat.com.br/terminal-com-oh-my-zsh-spaceship-dracula-e-mais/
 *
-sudo apt install update && apt dist-upgrade -y 
-msg="successfully installed!" 
+sudo apt install update && apt dist-upgrade -y
+pk= sudo apt install -y wget curl git
+msg="successfully installed!"
 
 function ComeBack {
 echo "Press <ENTER> to return to the main menu or CTRL + C to exit"
@@ -17,8 +18,9 @@ menu
 
 #1
 function installTools {
-	sudo apt-get install -y wget adb android-tools-adb android-tools-fastboot curl git zsh dconf-cli gnome-session qbittorrent net-tools vlc flatpak qemu qemu-kvm bridge-utils virt-manager &&
-    sudo usermod -a -G libvirt-qemu tchelo
+	#sudo apt-get install -y unzip unrar adb android-tools-adb android-tools-fastboot zsh dconf-cli gnome-session qbittorrent net-tools vlc flatpak qemu qemu-kvm bridge-utils virt-manager &&
+    #sudo usermod -a -G libvirt-qemu tchelo
+    $pk
     echo "Tools $msg"
     ComeBack
 }
@@ -115,13 +117,13 @@ function menu {
 	echo
     echo -e "\t\t\t\e${k}MENU  \e"
     echo
-	echo -e "\e${k}[0] Exit  \e"                 "\t\t\t[7] Timeshift"
-    echo -e "\e${k}[1] Tools \e"                 "\t\t\t[8] Gimp"
-	echo -e "\e${k}[2] Google Chrome \e"         "\t\t[9] Insomnia"
-	echo -e "\e${k}[3] Visual Studio Code \e"    "\t\t[10] Java JDK 8"
-	echo -e "\e${k}[4] GitKraken \e"             "\t\t\t[11] Xtreme Download Manager"
-	echo -e "\e${k}[5] Discord \e"               "\t\t\t[12] Oh-My-ZSH"
-    echo -e "\e${k}[6] VirtualBox \e"            "\t\t\t[13] AnyDesk"
+	echo -e "\e${k}[0] Exit  \e"                 "\t\t\t\e [[7] Timeshift"
+    echo -e "\e${k}[1] Tools \e"                 "\t\t\t\e [[8] Gimp"
+	echo -e "\e${k}[2] Google Chrome \e"         "\t\t\e [[9] Insomnia"
+	echo -e "\e${k}[3] Visual Studio Code \e"    "\t\t\e [[10] Java JDK 8"
+	echo -e "\e${k}[4] GitKraken \e"             "\t\t\t\e [[11] Xtreme Download Manager"
+	echo -e "\e${k}[5] Discord \e"               "\t\t\t\e [[12] Oh-My-ZSH"
+    echo -e "\e${k}[6] VirtualBox \e"            "\t\t\t\e [[13] AnyDesk"
     echo
 	echo -en "\t\t\e${k}Enter an Option: \e"
 	read -n 1 option
@@ -136,7 +138,11 @@ do
         2) echo "$option"; google-Chrome ;;
         3) echo "$option"; vsCode ;;
         4) echo "$option"; gitKraken ;;
+        *)
+        clear
+        echo "Sorry, wrong selection";;
         esac
-	    #read -n 1 line
+        echo -en "\n\n\t\t\tHit any key to continue"
+	    read -n 1 line
 done
 clear
