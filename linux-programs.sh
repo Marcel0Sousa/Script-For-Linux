@@ -10,19 +10,12 @@ sudo apt install update && apt dist-upgrade -y
 pk= sudo apt install -y wget curl git
 msg="successfully installed!"
 
-function ComeBack {
-echo "Press <ENTER> to return to the main menu or CTRL + C to exit"
-read 'enter'
-menu
-}
-
 #1
 function installTools {
-	#sudo apt-get install -y unzip unrar adb android-tools-adb android-tools-fastboot zsh dconf-cli gnome-session qbittorrent net-tools vlc flatpak qemu qemu-kvm bridge-utils virt-manager &&
-    #sudo usermod -a -G libvirt-qemu tchelo
-    $pk
+	sudo apt-get install -y unzip unrar adb android-tools-adb android-tools-fastboot zsh dconf-cli gnome-session qbittorrent net-tools vlc flatpak qemu qemu-kvm bridge-utils virt-manager &&
+    sudo usermod -a -G libvirt-qemu tchelo
     echo "Tools $msg"
-    ComeBack
+
 }
 
 #2
@@ -32,7 +25,6 @@ function google-Chrome {
     sudo dpkg -i google-chrome.deb
     rm google-chrome.deb
     echo "Google Chrome $msg"
-    ComeBack
 }
 
 #3
@@ -42,7 +34,6 @@ function vsCode {
     sudo dpkg -i vscode.deb
     rm vscode.deb
     echo "VSCode $msg"
-    ComeBack
 }
 
 #4
@@ -52,7 +43,6 @@ function gitKraken {
     sudo dpkg -i gk.deb
     rm gk.deb
     echo "GitKraken $msg"
-    ComeBack
 }
 
 #5
@@ -62,7 +52,6 @@ function disCord {
     sudo dpkg -i discord.deb
     rm discord.deb
     echo "Disord $msg"
-    ComeBack
 }
 
 #6
@@ -72,7 +61,6 @@ function virtualBox {
     sudo dpkg -i vm.deb
     echo "VirtualBox $msg"
     rm vm.deb
-    ComeBack
 }
 
 #7
@@ -87,8 +75,62 @@ function Timeshift {
 function gimp {
     GIMP=https://flathub.org/repo/appstream/org.gimp.GIMP.flatpakref
     sudo flatpak install $GIMP
+    rm org.gimp.GIMP.flatpakref
     echo "Gimp $msg"
 }
+
+#9
+function Insomnia {
+    INSOMNIA=https://github-production-release-asset-2e65be.s3.amazonaws.com/56899284/e217bd00-5296-11ea-98da-f03d5d4bdcc8?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20200306%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200306T092751Z&X-Amz-Expires=300&X-Amz-Signature=94aea447b4309770037319bbe3769ef90e06a889c0d76009223addcad9194e26&X-Amz-SignedHeaders=host&actor_id=24213290&response-content-disposition=attachment%3B%20filename%3Dinsomnia_7.1.1_amd64.deb&response-content-type=application%2Foctet-stream
+    wget $INSOMNIA -O insomnia.deb
+    sudo dpkg -i insomnia
+    rm insomnia.deb
+    echo "Insomnia $msg"
+}
+
+#10
+function Java8 {
+    echo "Java 8"
+}
+
+#11
+function xdMan {
+    wget https://ufpr.dl.sourceforge.net/project/xdman/old-releases/xdman.deb
+    sudo dpkg -i xdman.deb
+    rm xdman.deb
+    echo "Xtreme Download Manager $msg"
+}
+
+#12
+function Oh-My-ZSH {
+    #oh-my-zsh
+    #sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+    echo "Do you want to install Dracula Theme and plugins? [Y/n] "
+    read start
+    if [ $start == "y" ]; then
+        #Dracula Theme
+        #git clone https://github.com/dracula/gnome-terminal
+        #cd gnome-terminal
+        #./install.sh
+
+        #cd
+        #rm -rf gnome-terminal
+        #Install Spaceship
+        #git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+        #ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+
+        #ZSH Plugins
+        #sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
+        echo "Plugins installed"
+    
+    else
+        echo "Plugins not installed"
+    fi
+    echo "Oh-My-ZSH $msg"
+}
+
+
 
 #13
 function anyDesk {
@@ -97,11 +139,12 @@ function anyDesk {
     sudo dpkg -i anyD.deb
     rm anyD.deb
     echo "AnyDesk $msg"
-    ComeBack
 }
 
 function menu {
 	clear
+    unset option
+    echo "$option"
 	k='\033[01;32m'
     echo
     echo -e "\e${k}████████╗ ██████╗  ██████╗ ██╗     ███████╗\e";
@@ -125,24 +168,35 @@ function menu {
 	echo -e "\e${k}[5] Discord \e"               "\t\t\t\e [[12] Oh-My-ZSH"
     echo -e "\e${k}[6] VirtualBox \e"            "\t\t\t\e [[13] AnyDesk"
     echo
-	echo -en "\t\t\e${k}Enter an Option: \e"
-	read -n 1 option
+    read -a option -p "Enter an option and press <ENTER>: "
+	
 }
-
 while [ 1 ]
 do
-        menu
-        case $option in
-        0) echo "$option"; exit;;
-        1) echo "$option"; installTools ;;
-        2) echo "$option"; google-Chrome ;;
-        3) echo "$option"; vsCode ;;
-        4) echo "$option"; gitKraken ;;
-        *)
-        clear
-        echo "Sorry, wrong selection";;
-        esac
-        echo -en "\n\n\t\t\tHit any key to continue"
-	    read -n 1 line
+    menu
+    case $option in
+    0)
+    exit
+    break;;   
+    1) installTools ;;
+    2) google-Chrome ;;
+    3) vsCode ;;
+    4) gitKraken ;;
+    5) disCord ;;
+    6) virtualBox ;;
+    7) Timeshift ;;
+    8) gimp ;;
+    9) Insomnia ;;
+    10) Java8 ;;
+    11) xdMan ;;
+    12) Oh-My-ZSH ;;
+    13) anyDesk ;;
+
+    *)
+    echo "Sorry, wrong selection";;
+    esac
+    echo -en "Press <Enter> to continue or <Ctrl+x> to exit"
+	read -n 1
+    
 done
 clear
