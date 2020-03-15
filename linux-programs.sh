@@ -12,7 +12,7 @@ msg="successfully installed!"
 
 #1
 function installTools {
-	sudo apt-get install -y unzip unrar adb android-tools-adb android-tools-fastboot zsh dconf-cli gnome-session qbittorrent net-tools vlc flatpak qemu qemu-kvm bridge-utils virt-manager &&
+    sudo apt-get install -y unzip unrar adb android-tools-adb android-tools-fastboot zsh dconf-cli gnome-session qbittorrent net-tools vlc flatpak qemu qemu-kvm bridge-utils virt-manager &&
     sudo usermod -a -G libvirt-qemu tchelo
     echo "Tools $msg"
 
@@ -90,7 +90,27 @@ function Insomnia {
 
 #10
 function Java8 {
-    echo "Java 8"
+    if [ -e "/usr/lib/jvm" ]; then
+        echo "Directory exists"
+    else
+        sudo mkdir /usr/lib/jvm
+    fi
+
+    if [ -e "/usr/lib/jvm/jdk-8u241-linux-x64.tar.gz" ]; then
+        echo "File exists"
+    else
+        echo "Downloading Java JDK 8..."
+        sudo wget https://master.dl.sourceforge.net/project/javajdk-8/JDK8/jdk-8u241-linux-x64.tar.gz -P /usr/lib/jvm/
+    fi
+
+    cd /usr/lib/jvm/
+    echo "Extracting the files...\n"
+    sudo tar -xf jdk-8u241-linux-x64.tar.gz
+    sudo rm jdk-8u241-linux-x64.tar.gz
+    sudo wget https://master.dl.sourceforge.net/project/javajdk-8/JDK8/jdk.sh -P /etc/profile.d/
+    sudo chmod +x /etc/profile.d/jdk.sh
+    sudo ln -s /usr/lib/jvm/jdk1.8.0_241/bin/java /usr/bin/java
+    sudo ln -s /usr/lib/jvm/jdk1.8.0_241/bin/javac /usr/bin/javac
 }
 
 #11
@@ -103,25 +123,22 @@ function xdMan {
 
 #12
 function Oh-My-ZSH {
-    #oh-my-zsh
-    #sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
     echo "Do you want to install Dracula Theme and plugins? [Y/n] "
     read start
     if [ $start == "y" ]; then
         #Dracula Theme
-        #git clone https://github.com/dracula/gnome-terminal
-        #cd gnome-terminal
-        #./install.sh
+        git clone https://github.com/dracula/gnome-terminal && cd gnome-terminal
+        ./install.sh
 
-        #cd
-        #rm -rf gnome-terminal
-        #Install Spaceship
-        #git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
-        #ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+        cd && rm -rf gnome-terminal
+        Install Spaceship
+        git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+        ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 
         #ZSH Plugins
-        #sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh)"
         echo "Plugins installed"
     
     else
@@ -130,8 +147,6 @@ function Oh-My-ZSH {
     echo "Oh-My-ZSH $msg"
 }
 
-
-
 #13
 function anyDesk {
     ANYDESK=https://download.anydesk.com/linux/anydesk_5.5.4-1_amd64.deb
@@ -139,6 +154,23 @@ function anyDesk {
     sudo dpkg -i anyD.deb
     rm anyD.deb
     echo "AnyDesk $msg"
+}
+
+#14
+function installAll {
+    installTools
+    google-Chrome
+    vsCode
+    gitKraken
+    disCord
+    virtualBox
+    Timeshift
+    gimp
+    Insomnia
+    Java8
+    xdMan
+    anyDesk
+    Oh-My-ZSH
 }
 
 function menu {
@@ -160,24 +192,26 @@ function menu {
 	echo
     echo -e "\t\t\t\e${k}MENU  \e"
     echo
-	echo -e "\e${k}[0] Exit  \e"                 "\t\t\t\e [[7] Timeshift"
-    echo -e "\e${k}[1] Tools \e"                 "\t\t\t\e [[8] Gimp"
-	echo -e "\e${k}[2] Google Chrome \e"         "\t\t\e [[9] Insomnia"
-	echo -e "\e${k}[3] Visual Studio Code \e"    "\t\t\e [[10] Java JDK 8"
-	echo -e "\e${k}[4] GitKraken \e"             "\t\t\t\e [[11] Xtreme Download Manager"
-	echo -e "\e${k}[5] Discord \e"               "\t\t\t\e [[12] Oh-My-ZSH"
-    echo -e "\e${k}[6] VirtualBox \e"            "\t\t\t\e [[13] AnyDesk"
+	echo -e "\e${k}[00] Install All \e"
+    echo -e "\e${k}[0] Exit  \e"                "\t\t\t [[7] Timeshift"
+    echo -e "\e${k}[1] Tools \e"                 "\t\t\t [[8] Gimp"
+	echo -e "\e${k}[2] Google Chrome \e"         "\t\t [[9] Insomnia"
+	echo -e "\e${k}[3] Visual Studio Code \e"    "\t\t [[10] Java JDK 8"
+	echo -e "\e${k}[4] GitKraken \e"             "\t\t\t [[11] Xtreme Download Manager"
+	echo -e "\e${k}[5] Discord \e"               "\t\t\t [[12] Oh-My-ZSH"
+    echo -e "\e${k}[6] VirtualBox \e"            "\t\t\t [[13] AnyDesk"
     echo
-    read -a option -p "Enter an option and press <ENTER>: "
+    read -a option -p "Type an option and press <ENTER>: "
 	
 }
 while [ 1 ]
 do
     menu
     case $option in
+    00) installAll ;;
     0)
     exit
-    break;;   
+    break;;  
     1) installTools ;;
     2) google-Chrome ;;
     3) vsCode ;;

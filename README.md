@@ -16,7 +16,7 @@ $ sh linux-programs.sh
 * Google Chrome
 * VSCode
 * Discord
-* Firefox
+* Anydesk
 * VirtualBox
 * Timeshift
 * Gimp
