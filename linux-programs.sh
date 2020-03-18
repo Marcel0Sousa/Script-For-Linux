@@ -1,5 +1,6 @@
 #!/bin/bash
 :<<'*'
+Flameshot
 tweaks
 user themes
 Dash to Panel
