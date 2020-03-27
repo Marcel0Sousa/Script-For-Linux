@@ -1,5 +1,5 @@
 # Script For Linux
-# Linux post format script that installs some devs programs..
+# Linux post format script that installs some devs programs.
 
 # Screenshot
 <p align="centre">
