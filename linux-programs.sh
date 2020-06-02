@@ -82,11 +82,26 @@ function gimp {
 
 #9
 function Insomnia {
+    :<<'teste'
     INSOMNIA=https://github-production-release-asset-2e65be.s3.amazonaws.com/56899284/e217bd00-5296-11ea-98da-f03d5d4bdcc8?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20200306%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200306T092751Z&X-Amz-Expires=300&X-Amz-Signature=94aea447b4309770037319bbe3769ef90e06a889c0d76009223addcad9194e26&X-Amz-SignedHeaders=host&actor_id=24213290&response-content-disposition=attachment%3B%20filename%3Dinsomnia_7.1.1_amd64.deb&response-content-type=application%2Foctet-stream
     wget $INSOMNIA -O insomnia.deb
     sudo dpkg -i insomnia
     rm insomnia.deb
     echo "Insomnia $msg"
+teste
+
+    # Add to sources
+    echo "deb https://dl.bintray.com/getinsomnia/Insomnia /" \
+        | sudo tee -a /etc/apt/sources.list.d/insomnia.list
+
+# Add public key used to verify code signature
+    wget --quiet -O - https://insomnia.rest/keys/debian-public.key.asc \
+        | sudo apt-key add -
+
+# Refresh repository sources and install Insomnia
+    sudo apt-get update
+    sudo apt-get install insomnia
+
 }
 
 #10
