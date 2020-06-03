@@ -13,7 +13,7 @@ msg="successfully installed!"
 
 #1
 function installTools {
-    sudo apt-get install -y unzip unrar adb android-tools-adb android-tools-fastboot zsh dconf-cli gnome-session qbittorrent net-tools vlc flatpak qemu qemu-kvm bridge-utils virt-manager &&
+    sudo apt-get install -y unzip unrar adb android-tools-adb android-tools-fastboot zsh dconf-cli gnome-session qbittorrent net-tools vlc flatpak qemu qemu-kvm bridge-utils virt-manager chrome-gnome-shell &&
     sudo usermod -a -G libvirt-qemu tchelo
     echo "Tools $msg"
 
