@@ -7,13 +7,13 @@ Dash to Panel
 Sound Input & Output Device Chooser
 https://blog.rocketseat.com.br/terminal-com-oh-my-zsh-spaceship-dracula-e-mais/
 *
-sudo apt install update && apt dist-upgrade -y
+sudo apt update && sudo apt dist-upgrade -y
 pk= sudo apt install -y wget curl git
 msg="successfully installed!"
 
 #1
 function installTools {
-    sudo apt-get install -y unzip unrar adb android-tools-adb android-tools-fastboot zsh dconf-cli gnome-session qbittorrent net-tools vlc flatpak qemu qemu-kvm bridge-utils virt-manager chrome-gnome-shell &&
+    sudo apt-get install -y unzip unrar adb android-tools-adb android-tools-fastboot flameshot zsh openjdk-8-jdk dconf-cli gnome-session qbittorrent net-tools vlc flatpak qemu qemu-kvm bridge-utils virt-manager chrome-gnome-shell &&
     sudo usermod -a -G libvirt-qemu tchelo
     echo "Tools $msg"
 
@@ -30,7 +30,7 @@ function google-Chrome {
 
 #3
 function vsCode {
-    VSCODE=https://az764295.vo.msecnd.net/stable/26076a4de974ead31f97692a0d32f90d735645c0/code_1.41.1-1576681836_amd64.deb
+    VSCODE=https://az764295.vo.msecnd.net/stable/5763d909d5f12fe19f215cbfdd29a91c0fa9208a/code_1.45.1-1589445302_amd64.deb
     wget $VSCODE -O vscode.deb
     sudo dpkg -i vscode.deb
     rm vscode.deb
@@ -48,7 +48,7 @@ function gitKraken {
 
 #5
 function disCord {
-    DISCORD=https://dl.discordapp.net/apps/linux/0.0.9/discord-0.0.9.deb
+    DISCORD=https://dl.discordapp.net/apps/linux/0.0.10/discord-0.0.10.deb
     wget $DISCORD -O discord.deb
     sudo dpkg -i discord.deb
     rm discord.deb
@@ -60,6 +60,7 @@ function virtualBox {
     VB=https://download.virtualbox.org/virtualbox/6.1.4/virtualbox-6.1_6.1.4-136177~Ubuntu~eoan_amd64.deb
     wget $VB -O vm.deb
     sudo dpkg -i vm.deb
+    sudo apt --fix-broken install
     echo "VirtualBox $msg"
     rm vm.deb
 }
@@ -82,23 +83,16 @@ function gimp {
 
 #9
 function Insomnia {
-    :<<'teste'
-    INSOMNIA=https://github-production-release-asset-2e65be.s3.amazonaws.com/56899284/e217bd00-5296-11ea-98da-f03d5d4bdcc8?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20200306%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200306T092751Z&X-Amz-Expires=300&X-Amz-Signature=94aea447b4309770037319bbe3769ef90e06a889c0d76009223addcad9194e26&X-Amz-SignedHeaders=host&actor_id=24213290&response-content-disposition=attachment%3B%20filename%3Dinsomnia_7.1.1_amd64.deb&response-content-type=application%2Foctet-stream
-    wget $INSOMNIA -O insomnia.deb
-    sudo dpkg -i insomnia
-    rm insomnia.deb
-    echo "Insomnia $msg"
-teste
 
     # Add to sources
     echo "deb https://dl.bintray.com/getinsomnia/Insomnia /" \
         | sudo tee -a /etc/apt/sources.list.d/insomnia.list
 
-# Add public key used to verify code signature
+    # Add public key used to verify code signature
     wget --quiet -O - https://insomnia.rest/keys/debian-public.key.asc \
         | sudo apt-key add -
 
-# Refresh repository sources and install Insomnia
+    # Refresh repository sources and install Insomnia
     sudo apt-get update
     sudo apt-get install insomnia
 
@@ -173,6 +167,25 @@ function anyDesk {
 }
 
 #14
+function genyMotion {
+    GM=https://dl.genymotion.com/releases/genymotion-3.1.0/genymotion-3.1.0-linux_x64.bin
+    wget $GM -O gMotion.bin
+    chmod +x gMotion.bin
+    sudo ./gMotion.bin
+    rm gMotion.bin
+    echo "Genymotion $msg"
+}
+
+function draculaTheme {
+    sudo apt-get install dconf-cli
+    git clone https://github.com/dracula/gnome-terminal
+    ./gnome-terminal/install.sh
+    rm -rf gnome-terminal
+    echo "Dracula Theme $msg"
+}
+
+
+#00
 function installAll {
     installTools
     google-Chrome
@@ -187,6 +200,7 @@ function installAll {
     xdMan
     anyDesk
     Oh-My-ZSH
+    genyMotion
 }
 
 function menu {
@@ -209,15 +223,16 @@ function menu {
     echo -e "\t\t\t\e${k}MENU  \e"
     echo
 	echo -e "\e${k}[00] Install All \e"
-    echo -e "\e${k}[0] Exit  \e"                "\t\t\t [[7] Timeshift"
-    echo -e "\e${k}[1] Tools \e"                 "\t\t\t [[8] Gimp"
-	echo -e "\e${k}[2] Google Chrome \e"         "\t\t [[9] Insomnia"
-	echo -e "\e${k}[3] Visual Studio Code \e"    "\t\t [[10] Java JDK 8"
-	echo -e "\e${k}[4] GitKraken \e"             "\t\t\t [[11] Xtreme Download Manager"
-	echo -e "\e${k}[5] Discord \e"               "\t\t\t [[12] Oh-My-ZSH"
-    echo -e "\e${k}[6] VirtualBox \e"            "\t\t\t [[13] AnyDesk"
+    echo -e "\e${k}[0] Exit  \e"                 "\t\t\t [[8] Gimp"
+    echo -e "\e${k}[1] Tools \e"                 "\t\t\t [[9] Insomnia"
+	echo -e "\e${k}[2] Google Chrome \e"         "\t\t [[10] Java JDK 8"
+	echo -e "\e${k}[3] Visual Studio Code \e"    "\t\t [[11] Xtreme Download Manager"
+	echo -e "\e${k}[4] GitKraken \e"             "\t\t\t [[12] Oh-My-ZSH"
+	echo -e "\e${k}[5] Discord \e"               "\t\t\t [[13] AnyDesk"
+    echo -e "\e${k}[6] VirtualBox \e"            "\t\t\t [[14] Genymotion"
+    echo -e "\e${k}[7] Timeshift \e"
     echo
-    read -a option -p "Type an option and press <ENTER>: "
+    read -a option -p "[[[*] Type an option and press <ENTER>: "
 	
 }
 while [ 1 ]
@@ -241,11 +256,12 @@ do
     11) xdMan ;;
     12) Oh-My-ZSH ;;
     13) anyDesk ;;
+    14) genyMotion ;;
 
     *)
     echo "Sorry, wrong selection";;
     esac
-    echo -en "Press <Enter> to continue or <Ctrl+x> to exit"
+    echo -en "Press <Enter> to continue or <Ctrl+c> to exit"
 	read -n 1
     
 done
